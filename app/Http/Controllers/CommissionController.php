@@ -57,7 +57,7 @@ class CommissionController extends Controller
 
 
             foreach ($data as $d){
-               // $d->created_at = date("d-m-Y", strtotime($d->created_at));
+                $d->created_at = date("d-m-Y", strtotime($d->created_at));
 
                 if($d->action==AppConstants::BUY){
                     $d->action='Buy';

@@ -185,7 +185,7 @@
 
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'created_at', name: 'created_at', render: $.fn.dataTable.render.moment( 'YYYY/MM/DD', 'Do MMM YY', 'fr' ) },
+                    {data: 'created_at', name: 'created_at' },
                     {data: 'first_name', name: 'first_name'},
                     {data: 'last_name', name: 'last_name'},
                     {data: 'commission', name: 'commission'},

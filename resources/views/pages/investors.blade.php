@@ -1,5 +1,14 @@
 @extends('layouts.app', ['activePage' => 'investors', 'titlePage' => __('Investors')])
 
+<style>
+    .images > img{
+        width: 220px;
+        height: 220px;
+        padding-right: 5px;
+
+    }
+</style>
+
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -58,7 +67,8 @@
 
 
 @push('js')
-       <script>
+    <script type="text/javascript">
+
         $( function() {
             $( ".datepicker" ).datepicker({
                 changeMonth: true,
@@ -81,31 +91,14 @@
                 url: 'users/changeUserStatus',
                 data: {'status': status, 'user_id': user_id},
                 success: function (data) {
-                    swal("", "Successfully Updated!", "success");
+                    swal.fire("", "Successfully Updated!", "success");
                 }
             })
         });
 
-    </script>
-
-    <script type="text/javascript">
 
         load_data();
 
-
-        function search() {
-            var status = $(this).prop('checked') == true ? 1 : 0;
-            var user_id =  $(this).data('id');
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: 'users/changeUserStatus',
-                data: {'status': status, 'user_id': user_id},
-                success: function (data) {
-                    swal("", "Successfully Updated!", "success");
-                }
-            })
-        }
 
         $('#filter').click(function(){
             var from_date = $('#from_date').val();
@@ -118,7 +111,7 @@
             }
             else
             {
-                swal("", "Both Date is required!", "warning");
+                swal.fire("", "Both Date is required!", "warning");
             }
         })
 
@@ -165,8 +158,35 @@
         }
 
         $(document).on('click', '.viewimages', function(){
-            $id=  $(this).data('id');
-            alert($id);
+            var user_id =  $(this).data('id');
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: 'users/getUserImages',
+                data: {'user_id': user_id},
+                success: function (data) {
+                    let absolute;
+                    swal.fire({
+                        text: 'Profile image',
+                         html : '<div class="images">' +
+                             '<img  src="'+data.images.images[0].image_url+'">' +
+                             '<img  src ="'+data.images.images[1].image_url+'">' +
+                             '<img  src ="'+data.images.images[2].image_url+'">' +
+                             '<img src ="'+data.images.images[3].image_url+'">' +
+                             '<img src ="'+data.images.images[4].image_url+'"></div>',
+
+                       imageUrl: data.images.profile_image.image_url,
+                       imageWidth: absolute,
+                       imageHeight: absolute,
+                       imageAlt: 'Profile picture',
+                        imageBorderRadius: '50%',
+                        width: '1200px'
+
+
+                    });
+                }
+            })
         });
 
 

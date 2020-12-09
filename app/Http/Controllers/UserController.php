@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AppConstants;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\WarehouseActions;
@@ -53,9 +54,14 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View</a>
-<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Activate" data-off="Deactivate" data-onstyle="success" data-offstyle="danger" '.$row->user_status.'=1 ? checked : "">
- <a href="javascript:void(0)" class="investor_history btn btn-default btn-sm" data-id='.$row->id.'>History</a>';
+                    $actionBtn = '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View</a>';
+                    if($row->user_status==1){
+                        $actionBtn .= '<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" checked>' ;
+                    }
+                    else{
+                       $actionBtn .='<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">' ;
+                    }
+                    $actionBtn .= '<a href="javascript:void(0)" class="investor_history btn btn-default btn-sm" data-id='.$row->id.'>History</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -83,7 +89,7 @@ class UserController extends Controller
                 foreach ($data as $d){
                     $d->created_at= date('d-m-Y', strtotime($d->created_at));
 
-                        if($d->action=='1'){
+                        if($d->action==AppConstants::BUY){
                             $d->action='Buy';
                         }
                         else{
@@ -95,6 +101,25 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
+        }
+    }
+
+
+    public function getUserImages(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = User::find($request->user_id);
+            $data['profile_image']=$user->profile_image;
+            $data['images']=$user->images;
+            $html ='<div>';
+            foreach ($user->images as $a => $b){
+                $html .='<div class="images"><img src ="'.$b['image_url'].'"></div>';
+            }
+            $html ='</div>';
+
+            $data['html']=$html;
+
+            return response()->json(['success'=>$request->user_id,'images'=>$data]);
         }
     }
 }
