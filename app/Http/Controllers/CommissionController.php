@@ -61,11 +61,11 @@ class CommissionController extends Controller
 
                 if($d->action==AppConstants::BUY){
                     $d->action='Buy';
-                    $d['total'] = number_format(($d->trade_value * $d->commission)/(100 + $d->commission),4);
+                    $d['total'] = number_format(($d->trade_value * $d->commission * $d->amount)/(100 + $d->commission),4);
                 }
                 else{
                     $d->action='Sell';
-                    $d['total'] = number_format( ($d->trade_value *  $d->commission) / (100 - $d->commission),4);
+                    $d['total'] = number_format( ($d->trade_value *  $d->commission * $d->amount) / (100 - $d->commission),4);
                 }
             }
 

@@ -159,7 +159,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: "json",
-                        url: 'commissions/changeCommissions',
+                        url: 'requests/changeCommissions',
                         data: {'buy_commission': buy_commission, 'sell_commission': sell_commission},
                         success: function (data) {
                             swal.fire("",data.success, "success");
@@ -190,16 +190,10 @@
                     {data: 'last_name', name: 'last_name'},
                     {data: 'commission', name: 'commission'},
                     {data: 'action', name: 'action'},
-                    {data: 'total', name: 'total'},                ]
+                    {data: 'total', name: 'total'},
+                ]
             });
         }
-
-        $(document).on('click', '.viewimages', function(){
-            $id=  $(this).data('id');
-            alert($id);
-        });
-
-
 
         $(document).ready(function(){
 

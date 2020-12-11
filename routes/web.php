@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoldController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -66,9 +67,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/getUserImages',[\App\Http\Controllers\UserController::class, 'getUserImages']);
     Route::get('users/investments', [\App\Http\Controllers\UserController::class, 'getInvestments'])->name('users.investments');
 
-    Route::get('/commissions',[\App\Http\Controllers\CommissionController::class, 'index'])->name('commissions');
+    Route::get('commissions',[\App\Http\Controllers\CommissionController::class, 'index'])->name('commissions');
     Route::get('commissions/changeCommissions',[\App\Http\Controllers\CommissionController::class, 'changeCommissions']);
     Route::get('commissions/getInvestmentsCommissions', [\App\Http\Controllers\CommissionController::class, 'getInvestmentsCommissions'])->name('commissions.getInvestmentsCommissions');
+
+    Route::get('requests',[\App\Http\Controllers\RequestsController::class, 'index'])->name('requests');
+    Route::get('requests/getCustomerRequests', [\App\Http\Controllers\RequestsController::class, 'getCustomerRequests'])->name('requests.getCustomerRequests');
+    Route::post('requests/changeRequestStatus',[\App\Http\Controllers\RequestsController::class, 'changeRequestStatus']);
+    Route::post('requests/replyRequests',[\App\Http\Controllers\RequestsController::class, 'replyRequests']);
+
+    Route::get('gold',[GoldController::class, 'index'])->name('gold');
+    Route::get('gold/getCustomerGold', [GoldController::class, 'getCustomerGold'])->name('gold.getCustomerGold');
+    Route::post('gold/editWarehouseGold',[GoldController::class,'editWarehouseGold']);
+    Route::get('gold/getUsers', [\App\Http\Controllers\GoldController::class, 'getUsers'])->name('gold.getUsers');
+
+    Route::get('reports',[\App\Http\Controllers\ReportsController::class, 'index'])->name('reports');
 
 });
 

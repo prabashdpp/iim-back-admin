@@ -40,10 +40,10 @@ class UserController extends Controller
                 $data = User::get();
             }
                 foreach ($data as $d){
-                    if($d->gender=='1'){
+                    if($d->gender==AppConstants::GENDER_MALE){
                         $d->gender='Male';
                     }
-                    elseif ($d->gender=='2'){
+                    elseif ($d->gender==AppConstants::GENDER_FEMALE){
                         $d->gender='Female';
                     }
                     else{

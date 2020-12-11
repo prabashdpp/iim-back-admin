@@ -31,6 +31,27 @@
             </a>
         </li>
 
+        <li class="nav-item{{ $activePage == 'requests' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('requests') }}">
+                <i class="material-icons">support_agent</i>
+                <p>{{ __('Requests') }}</p>
+            </a>
+        </li>
+
+        <li class="nav-item{{ $activePage == 'gold' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('gold') }}">
+                <i class="material-icons">account_balance</i>
+                <p>{{ __('Gold') }}</p>
+            </a>
+        </li>
+
+        <li class="nav-item{{ $activePage == 'reports' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('reports') }}">
+                <i class="material-icons">insert_chart_outlined</i>
+                <p>{{ __('Reports') }}</p>
+            </a>
+        </li>
+
       <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
           <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>

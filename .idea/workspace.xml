@@ -20,12 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fdc7f8e-728c-47b3-bae5-1f4a1007b132" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/GoldController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/CustomerRequestsDetails.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Constants/AppConstants.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Constants/AppConstants.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,14 +170,15 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/pages" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\invest_in_moi_back\app" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\resources\views\pages" />
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Http\Controllers" />
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\app" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Models" />
     </key>
   </component>
@@ -194,7 +203,8 @@
       <workItem from="1607426037296" duration="30444000" />
       <workItem from="1607499218001" duration="15305000" />
       <workItem from="1607531451625" duration="420000" />
-      <workItem from="1607532206445" duration="13229000" />
+      <workItem from="1607532206445" duration="13326000" />
+      <workItem from="1607567708343" duration="43695000" />
     </task>
     <servers />
   </component>
@@ -214,18 +224,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="689" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607061041666">
+    <state x="450" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607577301013">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="689" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607061041666" />
-    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607498682502">
+    <state x="450" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607577301013" />
+    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607672895092">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607498682502" />
-    <state x="795" y="442" key="NewPhpFileDialog" timestamp="1607489600625">
+    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607672895092" />
+    <state x="795" y="442" key="NewPhpFileDialog" timestamp="1607625821893">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="795" y="442" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607489600625" />
+    <state x="795" y="442" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607625821893" />
     <state x="616" y="235" key="run.anything.popup" timestamp="1607062899261">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
