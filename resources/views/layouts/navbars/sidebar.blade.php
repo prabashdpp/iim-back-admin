@@ -56,7 +56,7 @@
                     <b class="caret"></b>
                 </p>
             </a>
-            <div class="collapse show" id="laravelExample">
+            <div class="collapse hide" id="laravelExample">
                 <ul class="nav">
                     <li class="nav-item{{ $activePage == 'reports-summary' ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('reports.summary') }}">
