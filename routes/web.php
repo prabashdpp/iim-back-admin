@@ -83,5 +83,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('reports',[\App\Http\Controllers\ReportsController::class, 'index'])->name('reports');
 
+    Route::get('chart-line', [\App\Http\Controllers\ChartController::class,'chartLine'])->name('');
+    Route::get('chart-line-ajax',  [\App\Http\Controllers\ChartController::class,'chartLineAjax']);
+
+    Route::get('reports-summary', [\App\Http\Controllers\ReportsController::class, 'reportSummary'])->name('reports.summary');
+    Route::get('reports-users', [\App\Http\Controllers\ReportsController::class, 'reportUsers'])->name('reports.users');
+    Route::get('reports-invests', [\App\Http\Controllers\ReportsController::class, 'reportInvests'])->name('reports.invests');
+    Route::get('reports-requests', [\App\Http\Controllers\ReportsController::class, 'reportRequests'])->name('reports.requests');
+    Route::get('reports-payments', [\App\Http\Controllers\ReportsController::class, 'reportPayments'])->name('reports.payments');
+
+
 });
 

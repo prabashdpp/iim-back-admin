@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Constants\AppConstants;
 use App\Models\CustomerRequests;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Notifications\AppNotification;
 use Yajra\DataTables\DataTables;
+use Notification;
 
 class RequestsController extends Controller
 {
@@ -99,11 +102,29 @@ class RequestsController extends Controller
         if($customerRequest->type==AppConstants::CASH_OUT){
             if($request->acceptRequest==AppConstants::REQUEST_RESULT_ACCEPTED){
                 $message= 'Cash Out Request Approved.';
+
             }
             else{
                 $message= 'Cash Out Request Rejected.';
             }
+
+            $user = User::find($customerRequest->user_id);
+
+
             $customerRequest->result_status=$request->acceptRequest;
+
+            $details = [
+                'subject' => 'Feedback for Cash Out Request',
+                'email' => TRUE,
+                'greeting' => 'Hi ' . $user->first_name,
+                'body' => 'We have approved your Cash Out request of ' . $customerRequest->amount . ' ' . $user->currency.'
+                            Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided.',
+                'thanks' => 'Thank you for using Invest in Moi',
+                'message' => 'approved your Cash Out Request of' . ' '. $customerRequest->amount . ' ' .$user->currency
+            ];
+
+            Notification::send($user, new AppNotification($details));
+
         }
 
 

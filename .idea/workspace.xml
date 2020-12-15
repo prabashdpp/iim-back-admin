@@ -20,19 +20,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fdc7f8e-728c-47b3-bae5-1f4a1007b132" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/GoldController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/CustomerRequestsDetails.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ChartController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/HighchartController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/AppNotification.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/reports/invests.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/reports/payments.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/reports/requests.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/reports/summary.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/invest_in_moi_back.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/invest_in_moi_back.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Constants/AppConstants.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Constants/AppConstants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommissionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReportsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports/users.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -47,6 +55,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -159,6 +170,8 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
       <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/vendor/yajra/laravel-datatables-oracle" />
+      <path value="$PROJECT_DIR$/vendor/consoletvs/charts" />
+      <path value="$PROJECT_DIR$/vendor/chartisan/php" />
     </include_path>
   </component>
   <component name="ProjectId" id="1lAt0V0qbe5Bgb9gLKgodbiyCDA" />
@@ -169,17 +182,23 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/pages/reports" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.customizations" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\resources\views\pages\reports" />
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Notifications" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\resources\views\pages" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Http\Controllers" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\app" />
-      <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\resources\views\pages\reports" />
     </key>
   </component>
   <component name="RunManager">
@@ -204,7 +223,16 @@
       <workItem from="1607499218001" duration="15305000" />
       <workItem from="1607531451625" duration="420000" />
       <workItem from="1607532206445" duration="13326000" />
-      <workItem from="1607567708343" duration="43695000" />
+      <workItem from="1607567708343" duration="48813000" />
+      <workItem from="1607700541737" duration="6000" />
+      <workItem from="1607716690173" duration="378000" />
+      <workItem from="1607717096678" duration="532000" />
+      <workItem from="1607748963857" duration="14000" />
+      <workItem from="1607791935566" duration="14986000" />
+      <workItem from="1607918102581" duration="4825000" />
+      <workItem from="1607926371929" duration="150000" />
+      <workItem from="1607926543117" duration="4550000" />
+      <workItem from="1607959936087" duration="5978000" />
     </task>
     <servers />
   </component>
@@ -222,28 +250,6 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="450" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607577301013">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="450" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607577301013" />
-    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607672895092">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="690" y="273" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607672895092" />
-    <state x="795" y="442" key="NewPhpFileDialog" timestamp="1607625821893">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="795" y="442" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607625821893" />
-    <state x="616" y="235" key="run.anything.popup" timestamp="1607062899261">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="235" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607062899261" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607143624993">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607143624993" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -123,8 +123,30 @@
 
                 function load_data(from_date = '', to_date = ''){
                     var table = $('.yajra-datatable').DataTable({
+                        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         processing: true,
                         serverSide: true,
+                        dom: 'fBlrptip',
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                title: 'Investors Report'+ from_date + to_date,
+                                className: "btn btn-info",
+                                style: "paddingRight:10px",
+                                exportOptions: {
+                                    columns: [ 0, 1, 2,3,4, 5,6 ]
+                                }
+
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                title: 'Investors Report'+ from_date + to_date,
+                                className: "btn btn-warning",
+                                exportOptions: {
+                                    columns: [ 0, 1, 2,3,4, 5,6 ]
+                                }
+                            }
+                        ],
                         ajax: {
                             url: "{{route('requests.getCustomerRequests') }}",
                             type: 'GET',
@@ -219,7 +241,7 @@
                 $(document).on('click', '.request_action', function(){
                     Swal.fire({
                         title: 'Action for the Customer Request',
-                         html: '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Add message to describe what happening to Customer"></textarea>',
+                         html: '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Describe what happening to Customer"></textarea>',
                         icon: 'info',
                         showCancelButton: true,
                         showDenyButton:true,

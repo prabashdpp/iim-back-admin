@@ -137,6 +137,21 @@
                 "fnDrawCallback": function() {
                     $('.toggle-class').bootstrapToggle();
                 },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Data export',
+                        className: "btn btn-default",
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Data export',
+                        className: "btn btn-success",
+
+                    }
+                ],
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'first_name', name: 'first_name', class:'first_name'},

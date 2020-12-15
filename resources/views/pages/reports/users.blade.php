@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'reports', 'titlePage' => __('Reports')])
+@extends('layouts.app', ['activePage' => 'reports-users', 'titlePage' => __('Reports Users')])
 
 @section('content')
     <div class="content">
@@ -7,91 +7,60 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Reports</h4>
+                            <h4 class="card-title ">Reports Users</h4>
                         </div>
 
                         <div class="card-body">
 
-
-                            <div class="row input-daterange">
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-header card-header-success card-header-icon">
-                                        <div class="card-icon">
-                                            <i class="material-icons">account_balance</i>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">
+                                            </div>
                                         </div>
-                                        <p class="card-category font-weight-bold">Total Gold : <span id="warehouse_gold_amount">{{$warehouse_gold_amount}}</span> {{\App\Constants\AppConstants::INSTRUMENT_UNIT}}</p>
-                                        <input type="text" name="add_gold_amount" id="add_gold_amount" class="form-control" data-width="750" placeholder="Add Gold to Warehouse"/>
+                                        <div class="card-body">
+                                            <h4 class="card-title">User Report</h4>
+                                        </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="stats">
-                                            <i class="material-icons">date_range</i>{{$updated_at}}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-warning">
+                                            <div class="ct-chart" id="websiteViewsChart"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Email Subscriptions</h4>
+                                            <p class="card-category">Last Campaign Performance</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">access_time</i> campaign sent 2 days ago
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-3 col-md-6 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-header card-header-danger card-header-icon">
-                                        <div class="card-icon">
-                                            <i class="material-icons">payments</i>
-                                        </div>
-                                        <p class="card-category font-weight-bold">Total Cash : <span id="warehouse_cash_amount">{{$warehouse_cash_amount}}</span> {{\App\Constants\AppConstants::INSTRUMENT_CURRENCY}}</p>
-                                        <input type="text" name="add_cash_amount" id="add_cash_amount" class="form-control" placeholder="Add Cash to Warehouse"  />
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="stats">
-                                            <i class="material-icons">date_range</i>{{$updated_at}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <hr/>
-
 
                             <div class="card-body">
-
-                            <div class="row input-daterange">
-                                    <div class="col-md-4">
-                                        <input type="text" name="from_date" id="from_date" class="form-control datepicker" placeholder="From Date"  />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-danger">
+                                            <div class="ct-chart" id="completedTasksChart"></div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Completed Tasks</h4>
+                                            <p class="card-category">Last Campaign Performance</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">access_time</i> campaign sent 2 days ago
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="text" name="to_date" id="to_date" class="form-control datepicker" placeholder="To Date"  />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
-                                        <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
-                                    </div>
-                            </div>
-
-                        </div>
-
-
-
-
-
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table yajra-datatable">
-                                    <thead class=" text-primary">
-                                    <th>ID</th>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Gold Weight</th>
-                                    <th>Worth Value</th>
-                                    <th>Trade Value</th>
-                                    <th>Commission Rate</th>
-                                    <th>Action</th>
-                                    <th>Commission</th>
-                                    <th>Options</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,6 +75,8 @@
 @push('js')
 
         <script type="text/javascript">
+
+
             $(document).ready(function(){
 
                 $('#add_gold_amount').val('');
@@ -263,6 +234,60 @@
 
 
     </script>
+
+        <script type="text/javascript">
+            var userData = <?php echo json_encode($userData)?>;
+
+            Highcharts.chart('dailySalesChart', {
+                title: {
+                    text: 'New User Growth, 2020'
+                },
+                subtitle: {
+                },
+                xAxis: {
+                    // categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                    //     'October', 'November', 'December'
+                    // ]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of New Users'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true
+                    }
+                },
+                series: [{
+                    name: 'New Users',
+                    data: userData
+                }],
+                credits: {
+                    enabled: false
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+            });
+
+        </script>
 
 @endpush
 
