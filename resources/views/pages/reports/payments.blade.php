@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'report-payments', 'titlePage' => __('Requests')])
+@extends('layouts.app', ['activePage' => 'report-payments', 'titlePage' => __('Payments Report')])
 
 @section('content')
     <div class="content">
@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Requests Report</h4>
+                            <h4 class="card-title ">Payments Report</h4>
                         </div>
 
                         <div class="card-body">
@@ -34,10 +34,9 @@
                                     <th>ID</th>
                                     <th>Date</th>
                                     <th>Name</th>
-                                    <th>Type</th>
+                                    <th>Currency</th>
                                     <th>Amount</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
+                                    <th>Status</th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -103,25 +102,25 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Request Report'+ from_date + to_date,
+                        title: 'payments Report'+ from_date + to_date,
                         className: "btn btn-info",
                         style: "paddingRight:10px",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                            columns: [ 0, 1, 2,3,4, 5]
                         }
 
                     },
                     {
                         extend: 'pdfHtml5',
-                        title: 'Request Report'+ from_date + to_date,
+                        title: 'Payments Report'+ from_date + to_date,
                         className: "btn btn-warning",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                            columns: [ 0, 1, 2,3,4, 5]
                         }
                     }
                 ],
                 ajax: {
-                    url: "{{route('requests.getCustomerRequests') }}",
+                    url: "{{route('reports.getCustomerPayments') }}",
                     type: 'GET',
                     data: function (d) {
                         d.from_date = from_date;
@@ -135,10 +134,9 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'created_at', name: 'created_at' },
                     {data: 'name', name: 'name'},
-                    {data: 'request_type', name: 'request_type'},
+                    {data: 'currency', name: 'currency'},
                     {data: 'amount', name: 'amount'},
-                    {data: 'email', name: 'email'},
-                    {data: 'mobile', name: 'mobile'},
+                    {data: 'status', name: 'status'},
                 ]
             });
         }

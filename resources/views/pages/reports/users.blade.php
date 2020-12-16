@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'reports-users', 'titlePage' => __('Reports Users')])
+@extends('layouts.app', ['activePage' => 'report-users', 'titlePage' => __('Users Report')])
 
 @section('content')
     <div class="content">
@@ -7,60 +7,42 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Reports Users</h4>
+                            <h4 class="card-title ">Users Report</h4>
                         </div>
 
                         <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card card-chart">
-                                        <div class="card-header card-header-success">
-                                            <div class="ct-chart" id="dailySalesChart">
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title">User Report</h4>
-                                        </div>
-                                    </div>
+                            <div class="row input-daterange">
+                                <div class="col-md-4">
+                                    <input type="text" name="from_date" id="from_date" class="form-control datepicker" placeholder="From Date"  />
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card card-chart">
-                                        <div class="card-header card-header-warning">
-                                            <div class="ct-chart" id="websiteViewsChart"></div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title">Email Subscriptions</h4>
-                                            <p class="card-category">Last Campaign Performance</p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="to_date" id="to_date" class="form-control datepicker" placeholder="To Date"  />
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
+                                    <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
                                 </div>
                             </div>
 
-                            <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card card-chart">
-                                        <div class="card-header card-header-danger">
-                                            <div class="ct-chart" id="completedTasksChart"></div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h4 class="card-title">Completed Tasks</h4>
-                                            <p class="card-category">Last Campaign Performance</p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table yajra-datatable">
+                                    <thead class=" text-primary">
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Country</th>
+                                    <th>Currency</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -74,15 +56,9 @@
 
 @push('js')
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-
-            $(document).ready(function(){
-
-                $('#add_gold_amount').val('');
-                $('#add_cash_amount').val('');
-
-            $( function() {
+        $( function() {
             $( ".datepicker" ).datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -90,20 +66,22 @@
                 maxDate: 0,
                 autoClose: true,
                 clearBtn: true
-                     });
-                });
             });
+        });
+
 
         load_data();
 
         $('#filter').click(function(){
             var from_date = $('#from_date').val();
             var to_date = $('#to_date').val();
+            var filter_request_type  = $('#filter_request_type').val();
+
 
             if(from_date != '' &&  to_date != '')
             {
-                $('.yajra-datatable').DataTable().destroy();
-                load_data(from_date, to_date);
+            $('.yajra-datatable').DataTable().destroy();
+            load_data(from_date, to_date,filter_request_type);
             }
             else
             {
@@ -118,176 +96,60 @@
             load_data();
         });
 
-        $(document).on('change', '#add_gold_amount,#add_cash_amount', function(){
-            Swal.fire({
-                title: 'Are you sure to add?',
-                text: "This is a highly impactful change!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Add it!'
-            }).then((result) => {
 
-                if (result.isConfirmed) {
-
-                    var add_gold_amount =  $('#add_gold_amount').val();
-                    var add_cash_amount = $('#add_cash_amount').val();
-
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: 'gold/editWarehouseGold',
-                        data: {'add_gold_amount': add_gold_amount, 'add_cash_amount': add_cash_amount},
-                        success: function (data) {
-                            $('#add_gold_amount').val('');
-                            $('#add_cash_amount').val('');
-                            $('#warehouse_gold_amount').text(data.warehouse_data.warehouse_gold_amount);
-                            $('#warehouse_cash_amount').text(data.warehouse_data.warehouse_cash_amount);
-                            swal.fire("",data.success, "success");
-                        }
-                    })
-                }
-            })
-        });
-
-
-        function load_data(from_date = '', to_date = ''){
+        function load_data(from_date = '', to_date = '',filter_request_type=''){
             var table = $('.yajra-datatable').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 processing: true,
                 serverSide: true,
+                dom: 'fBlrptip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Users Report'+ from_date + to_date,
+                        className: "btn btn-info",
+                        style: "paddingRight:10px",
+                        exportOptions: {
+                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                        }
+
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Users Report'+ from_date + to_date,
+                        className: "btn btn-warning",
+                        exportOptions: {
+                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                        }
+                    }
+                ],
                 ajax: {
-                    url: "{{route('gold.getCustomerGold') }}",
+                    url: "{{route('users.list') }}",
                     type: 'GET',
                     data: function (d) {
                         d.from_date = from_date;
                         d.to_date = to_date;
+                        d.filter_request_type = filter_request_type;
+
                     }
                 },
-
+                "fnDrawCallback": function() {
+                    $('.toggle-class').bootstrapToggle();
+                },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'created_at', name: 'created_at' },
                     {data: 'name', name: 'name'},
-                    {data: 'amount', name: 'amount'},
-                    {data: 'worth_value', name: 'worth_value'},
-                    {data: 'trade_value', name: 'trade_value'},
-                    {data: 'commission', name: 'commission'},
-                    {data: 'action', name: 'action'},
-                    {data: 'total', name: 'total'},
-                    {
-                        data: 'options',
-                        name: 'options',
-                        orderable: true,
-                        searchable: true
-                    }
-                ]
-            });
-        }
-
-        $(document).ready(function(){
-
-            function listings_swal() {
-                return '<table class="table view_user_datatable mdl-data-table"><thead class=" text-primary"><th>ID</th><th>First Name</th><th>Last Name</th><th>Gender</th><th>Country</th><th>Currency</th><th>Email</th><th>Mobile</th><th>Created at</th></thead><tbody></tbody></table>';
-            }
-
-            var html = listings_swal();
-
-            $(document).on('click', '.view_user', function(){
-
-            Swal.fire({
-                title: 'User Details',
-                html: html,
-                width: '1000px'
-            });
-
-            $id=  $(this).data('id');
-
-            var table = $('.view_user_datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                paging:   false,
-                ordering: false,
-                info:     false,
-                searching : false,
-                ajax: {
-                    url: "{{route('gold.getUsers') }}",
-                    type: 'GET',
-                    data: function (d) {
-                        d.user_id = $id;
-                    }
-                },
-                columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'first_name', name: 'first_name'},
-                    {data: 'last_name', name: 'last_name'},
                     {data: 'gender', name: 'gender'},
                     {data: 'country_code', name: 'country_code'},
                     {data: 'currency_code', name: 'currency_code'},
                     {data: 'email', name: 'email'},
                     {data: 'mobile', name: 'mobile'},
-                    {data: 'created_at', name: 'created_at'},
                 ]
             });
-        });
-        });
-
+        }
 
     </script>
-
-        <script type="text/javascript">
-            var userData = <?php echo json_encode($userData)?>;
-
-            Highcharts.chart('dailySalesChart', {
-                title: {
-                    text: 'New User Growth, 2020'
-                },
-                subtitle: {
-                },
-                xAxis: {
-                    // categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                    //     'October', 'November', 'December'
-                    // ]
-                },
-                yAxis: {
-                    title: {
-                        text: 'Number of New Users'
-                    }
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle'
-                },
-                plotOptions: {
-                    series: {
-                        allowPointSelect: true
-                    }
-                },
-                series: [{
-                    name: 'New Users',
-                    data: userData
-                }],
-                credits: {
-                    enabled: false
-                },
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
-                }
-            });
-
-        </script>
 
 @endpush
 

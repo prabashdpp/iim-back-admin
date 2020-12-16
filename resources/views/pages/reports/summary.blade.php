@@ -45,7 +45,7 @@
                                             <div class="ct-chart" id="requesttData"></div>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">Completed Tasks</h4>
+                                            <h4 class="card-title">Customer Requests</h4>
                                         </div>
 
                                     </div>

@@ -51,10 +51,17 @@ class UserController extends Controller
                     }
                 }
 
+            foreach ($data as $d){
+                $d->created_at = date("d-m-Y", strtotime($d->created_at));
+
+                $d->name = $d->first_name.' '.$d->last_name;
+
+            }
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View</a>';
+                    $actionBtn = '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View images</a>';
                     if($row->user_status==1){
                         $actionBtn .= '<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" checked>' ;
                     }

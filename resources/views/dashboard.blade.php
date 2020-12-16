@@ -79,16 +79,14 @@
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
-              <div class="ct-chart" id="dailySalesChart"></div>
+              <div class="ct-chart" id="UsersChart"></div>
             </div>
             <div class="card-body">
-              <h4 class="card-title">Daily Sales</h4>
+              <h4 class="card-title">Users</h4>
               <p class="card-category">
-                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">access_time</i> updated 4 minutes ago
               </div>
             </div>
           </div>
@@ -96,15 +94,13 @@
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-warning">
-              <div class="ct-chart" id="websiteViewsChart"></div>
+              <div class="ct-chart" id="investments"></div>
             </div>
             <div class="card-body">
-              <h4 class="card-title">Email Subscriptions</h4>
-              <p class="card-category">Last Campaign Performance</p>
+              <h4 class="card-title">Investments</h4>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
               </div>
             </div>
           </div>
@@ -112,15 +108,13 @@
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-danger">
-              <div class="ct-chart" id="completedTasksChart"></div>
+              <div class="ct-chart" id="requestChart"></div>
             </div>
             <div class="card-body">
-              <h4 class="card-title">Completed Tasks</h4>
-              <p class="card-category">Last Campaign Performance</p>
+              <h4 class="card-title">Requests</h4>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
               </div>
             </div>
           </div>
@@ -136,5 +130,162 @@
       // Javascript method's body can be found in assets/js/demos.js
       md.initDashboardPageCharts();
     });
+  </script>
+  <script type="text/javascript">
+      var userData = <?php echo json_encode($userData)?>;
+
+      Highcharts.chart('UsersChart', {
+          title: {
+              text: 'New User Growth, 2020'
+          },
+          subtitle: {
+          },
+          xAxis: {
+              categories: [ 'November', 'December','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                  'October'
+              ]
+          },
+          yAxis: {
+              title: {
+                  text: 'Number of New Users'
+              }
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+          },
+          plotOptions: {
+              series: {
+                  allowPointSelect: true
+              }
+          },
+          series: [{
+              name: 'New Users',
+              data: userData
+          }],
+          credits: {
+              enabled: false
+          },
+          responsive: {
+              rules: [{
+                  condition: {
+                      maxWidth: 500
+                  },
+                  chartOptions: {
+                      legend: {
+                          layout: 'horizontal',
+                          align: 'center',
+                          verticalAlign: 'bottom'
+                      }
+                  }
+              }]
+          }
+      });
+
+
+
+      var requestData = <?php echo json_encode($requestData)?>;
+
+      Highcharts.chart('requestChart', {
+          title: {
+              text: 'Customer Requests, 2020'
+          },
+          subtitle: {
+          },
+          xAxis: {
+              categories: [  'Cash Out','Gold Out', 'General','Questions']
+          },
+          yAxis: {
+              title: {
+                  text: 'Payments received'
+              }
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+          },
+          plotOptions: {
+              series: {
+                  allowPointSelect: true
+              }
+          },
+          series: [{
+              type: 'pie',
+              name: 'Requests',
+              data: requestData
+          }],
+          credits: {
+              enabled: false
+          },
+          responsive: {
+              rules: [{
+                  condition: {
+                      maxWidth: 500
+                  },
+                  chartOptions: {
+                      legend: {
+                          layout: 'horizontal',
+                          align: 'center',
+                          verticalAlign: 'bottom'
+                      }
+                  }
+              }]
+          }
+      });
+
+      var warehouseData = <?php echo json_encode($warehouseData)?>;
+
+      Highcharts.chart('investments', {
+          title: {
+              text: 'Customer Investments, 2020'
+          },
+          subtitle: {
+          },
+          xAxis: {
+              categories: [  'Cash Out','Gold Out', 'General','Questions']
+          },
+          yAxis: {
+              title: {
+                  text: 'Payments received'
+              }
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+          },
+          plotOptions: {
+              series: {
+                  allowPointSelect: true
+              }
+          },
+          series: [{
+              type: 'pie',
+              name: 'Investments',
+              data: warehouseData
+          }],
+          credits: {
+              enabled: false
+          },
+          responsive: {
+              rules: [{
+                  condition: {
+                      maxWidth: 500
+                  },
+                  chartOptions: {
+                      legend: {
+                          layout: 'horizontal',
+                          align: 'center',
+                          verticalAlign: 'bottom'
+                      }
+                  }
+              }]
+          }
+      });
+
+
+
   </script>
 @endpush

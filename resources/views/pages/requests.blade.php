@@ -126,27 +126,6 @@
                         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         processing: true,
                         serverSide: true,
-                        dom: 'fBlrptip',
-                        buttons: [
-                            {
-                                extend: 'excelHtml5',
-                                title: 'Investors Report'+ from_date + to_date,
-                                className: "btn btn-info",
-                                style: "paddingRight:10px",
-                                exportOptions: {
-                                    columns: [ 0, 1, 2,3,4, 5,6 ]
-                                }
-
-                            },
-                            {
-                                extend: 'pdfHtml5',
-                                title: 'Investors Report'+ from_date + to_date,
-                                className: "btn btn-warning",
-                                exportOptions: {
-                                    columns: [ 0, 1, 2,3,4, 5,6 ]
-                                }
-                            }
-                        ],
                         ajax: {
                             url: "{{route('requests.getCustomerRequests') }}",
                             type: 'GET',
@@ -239,9 +218,11 @@
 
                 /* Accept or reject requests of the customers*/
                 $(document).on('click', '.request_action', function(){
+
                     Swal.fire({
                         title: 'Action for the Customer Request',
-                         html: '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Describe what happening to Customer"></textarea>',
+                         html: '<P>Previous Activities</p><table class="table history-datatable2"><thead class=" text-primary"><th>ID</th><th>Description</th><th>Message</th><th>User</th><th>Date</th></thead><tbody></tbody></table>' +
+                             '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Describe what happening to Customer"></textarea>',
                         icon: 'info',
                         showCancelButton: true,
                         showDenyButton:true,
@@ -249,7 +230,7 @@
                        // cancelButtonColor: '#d33',
                         confirmButtonText: 'Accept',
                         denyButtonText: 'Reject',
-                        width: '550px'
+                        width: '1000px'
 
 
                     }).then((result) => {
@@ -284,6 +265,32 @@
                         }
 
                         });
+
+                    $id=  $(this).data('id');
+
+                    var table = $('.history-datatable2').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        dom: 't',
+                        ajax: {
+                            url: "{{route('requests.getPreviousActivities') }}",
+                            type: 'POST',
+                            data: function (d) {
+                                d.request_id = $id;
+                            }
+                        },
+                        "fnDrawCallback": function() {
+                            $('.toggle-class').bootstrapToggle();
+                        },
+                        columns: [
+                            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                            {data: 'description', name: 'description'},
+                            {data: 'message', name: 'message'},
+                            {data: 'name', name: 'name'},
+                            {data: 'created_at', name: 'created_at'},
+                        ]
+                    });
+
                 });
 
                 /* Reply to the customer general requests*/

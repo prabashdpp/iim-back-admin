@@ -103,6 +103,67 @@
             }
         });
         </script>
+
+        @if(auth()->user()->is_admin)
+            <script>
+
+
+                // $(document).on('click', '#navbarDropdownMenuLink', function(){
+                //     let request = getUnreadNotifications();
+                //     request.done((data) => {
+                //         $('#notification_container').load(data.html);
+                //     });
+                // });
+
+                function sendMarkRequest(id = null) {
+                    return $.ajax("{{ route('markNotificationAsRead') }}", {
+                        method: 'POST',
+                        data: {
+                            id
+                        }
+                    });
+                }
+
+                function getUnreadNotifications() {
+                    return $.ajax("{{ route('getUnreadNotifications') }}", {
+                        method: 'POST',
+                        data: {
+                        }
+                    });
+                }
+
+                $(function() {
+                    $(document).on('click','.dropdown-item[data-id=id]', function(e) {
+
+
+                        $('.mark-as-read').click(function () {
+                            var id = $(this).data('id');
+                            alert(id);
+                            $(this).hide();
+                            $('.dropdown-item[data-id=id]').hide();
+                            // $('.dropdown-item[data-id=id]').hide();
+                            // alert('stop there');
+
+
+                            let request = sendMarkRequest($(this).data('id'));
+                            request.done((data) => {
+                                $('.dropdown-item[data-id=id]').hide();
+                                $('#unread_notification_count').text(data.notification_count);
+                                $(this).parents('div.alert').remove();
+
+                            });
+                        });
+                        $('#mark-all').click(function () {
+                            let request = sendMarkRequest();
+                            request.done(() => {
+                                $('div.alert').remove();
+                            })
+                        });
+                    });
+                });
+            </script>
+        @endif
+
         @stack('js')
     </body>
 </html>

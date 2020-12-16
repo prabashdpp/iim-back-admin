@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
-	//app routes
+    //app routes
     Route::get('users/list', [\App\Http\Controllers\UserController::class, 'getUsers'])->name('users.list');
     Route::get('users/changeUserStatus',[\App\Http\Controllers\UserController::class, 'changeUserStatus']);
     Route::get('users/getUserImages',[\App\Http\Controllers\UserController::class, 'getUserImages']);
@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('requests/getCustomerRequests', [\App\Http\Controllers\RequestsController::class, 'getCustomerRequests'])->name('requests.getCustomerRequests');
     Route::post('requests/changeRequestStatus',[\App\Http\Controllers\RequestsController::class, 'changeRequestStatus']);
     Route::post('requests/replyRequests',[\App\Http\Controllers\RequestsController::class, 'replyRequests']);
+    Route::post('requests/getPreviousActivities',[\App\Http\Controllers\RequestsController::class, 'getPreviousActivities'])->name('requests.getPreviousActivities');
 
     Route::get('gold',[GoldController::class, 'index'])->name('gold');
     Route::get('gold/getCustomerGold', [GoldController::class, 'getCustomerGold'])->name('gold.getCustomerGold');
@@ -92,6 +93,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports-requests', [\App\Http\Controllers\ReportsController::class, 'reportRequests'])->name('reports.requests');
     Route::get('reports-payments', [\App\Http\Controllers\ReportsController::class, 'reportPayments'])->name('reports.payments');
 
+    Route::post('markNotificationAsRead', [App\Http\Controllers\HomeController::class, 'markNotificationAsRead'])->name('markNotificationAsRead');
+    Route::post('getUnreadNotifications', [App\Http\Controllers\HomeController::class, 'getUnreadNotifications'])->name('getUnreadNotifications');
+
+    //reports specific
+    Route::get('getCustomerPayments', [\App\Http\Controllers\ReportsController::class, 'getCustomerPayments'])->name('reports.getCustomerPayments');
+    Route::get('getInvestments', [\App\Http\Controllers\ReportsController::class, 'getInvestments'])->name('reports.getInvestments');
 
 });
 

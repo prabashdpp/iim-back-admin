@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\AppConstants;
 use App\Models\CustomerRequests;
+use App\Models\CustomerRequestsDetails;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Notifications\AppNotification;
@@ -30,11 +31,15 @@ class RequestsController extends Controller
 
             $from_date = $request->from_date ? $request->from_date : '';
             $to_date = $request->to_date ? $request->to_date  : '';
+            $request_type = $request->filter_request_type ? $request->filter_request_type  : '';
 
-            if($from_date){
+//            die($request_type);
+
+            if($from_date || $request_type){
                 $from_date= date('Y-m-d', strtotime($from_date));
                 $to_date= date('Y-m-d', strtotime($to_date));
                 $data = CustomerRequests::join('users','users.id','=','customer_requests.user_id')
+                   // ->where("customer_requests.type",'=',$request_type)
                     ->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"])
                     ->select('customer_requests.*','users.first_name','users.last_name','users.email','users.mobile')->get();
             }
@@ -94,6 +99,30 @@ class RequestsController extends Controller
 
         return response()->json(['success'=>'Request Status change successfully.']);
     }
+
+
+
+
+
+
+    public function getPreviousActivities(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $data = CustomerRequestsDetails::join('users','users.id','=','customer_requests_details.user_id')
+                    ->where('request_id','=',$request->request_id)
+                    ->select('customer_requests_details.*','users.first_name','users.last_name')->get();
+
+            foreach ($data as $d){
+                $d->name = $d->first_name.' '.$d->last_name;
+            }
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
 
     public function replyRequests(Request $request)
     {

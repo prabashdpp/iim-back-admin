@@ -24,17 +24,35 @@
         <li class="nav-item dropdown">
           <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">notifications</i>
-            <span class="notification">5</span>
+            <span class="notification" id="unread_notification_count">{{auth()->user()->unreadNotifications->count()}}</span>
             <p class="d-lg-none d-md-block">
               {{ __('Some Actions') }}
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">{{ __('Mike John responded to your email') }}</a>
-            <a class="dropdown-item" href="#">{{ __('You have 5 new tasks') }}</a>
-            <a class="dropdown-item" href="#">{{ __('You\'re now friend with Andrew') }}</a>
-            <a class="dropdown-item" href="#">{{ __('Another Notification') }}</a>
-            <a class="dropdown-item" href="#">{{ __('Another One') }}</a>
+
+                <div id="notification_container">
+                    @if(auth()->user()->is_admin)
+                        @forelse(auth()->user()->unreadNotifications as $notification)
+                            <div class="dropdown-item" role="alert" style="width:700px" data-id="{{ $notification->id }}">
+                                [{{ $notification->created_at }}] User {{ $notification->data['message'] }}
+                                <div style="width:250px;max-width:500px; display: inline-block">
+                                    <a href="#" class="dropdown-item float-right " >
+                                    </a></div>
+                                <div style="width: 100px"><button class="btn-info pull-left mark-as-read" data-id="{{ $notification->id }}">Mark as read</button></div>
+                            </div>
+
+                            @if($loop->last)
+                                <a href="#" id="mark-all">
+                                    <P class="dropdown-item text-danger">Mark all as read</P>
+                                </a>
+                            @endif
+                        @empty
+                            There are no new notifications
+                        @endforelse
+                    @endif
+                </div>
+
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -54,3 +72,5 @@
     </div>
   </div>
 </nav>
+
+

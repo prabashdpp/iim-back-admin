@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'report-invests', 'titlePage' => __('Requests')])
+@extends('layouts.app', ['activePage' => 'report-invests', 'titlePage' => __('Investments Report')])
 
 @section('content')
     <div class="content">
@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Requests Report</h4>
+                            <h4 class="card-title ">Investments Report</h4>
                         </div>
 
                         <div class="card-body">
@@ -34,10 +34,12 @@
                                     <th>ID</th>
                                     <th>Date</th>
                                     <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
+                                    <th>Gold Amount</th>
+                                    <th>Warehouse Post Amount</th>
+                                    <th>Action</th>
+                                    <th>Worth Value</th>
+                                    <th>Trade Value</th>
+                                    <th>Commission</th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -103,25 +105,25 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Request Report'+ from_date + to_date,
+                        title: 'Invests Report'+ from_date + to_date,
                         className: "btn btn-info",
                         style: "paddingRight:10px",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                            columns: [ 0, 1, 2,3,4, 5,6,7 ]
                         }
 
                     },
                     {
                         extend: 'pdfHtml5',
-                        title: 'Request Report'+ from_date + to_date,
+                        title: 'Invests Report'+ from_date + to_date,
                         className: "btn btn-warning",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4, 5,6 ]
+                            columns: [ 0, 1, 2,3,4, 5,6,7 ]
                         }
                     }
                 ],
                 ajax: {
-                    url: "{{route('requests.getCustomerRequests') }}",
+                    url: "{{route('reports.getInvestments') }}",
                     type: 'GET',
                     data: function (d) {
                         d.from_date = from_date;
@@ -135,11 +137,13 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'created_at', name: 'created_at' },
                     {data: 'name', name: 'name'},
-                    {data: 'request_type', name: 'request_type'},
                     {data: 'amount', name: 'amount'},
-                    {data: 'email', name: 'email'},
-                    {data: 'mobile', name: 'mobile'},
-                ]
+                    {data: 'post_amount', name: 'post_amount'},
+                    {data: 'action', name: 'action'},
+                    {data: 'worth_value', name: 'worth_value'},
+                    {data: 'trade_value', name: 'trade_value'},
+                    {data: 'total_commission', name: 'total_commission'},
+                  ]
             });
         }
 
