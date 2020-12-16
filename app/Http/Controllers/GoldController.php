@@ -44,15 +44,35 @@ class GoldController extends Controller
     {
         if ($request->ajax()) {
 
-            $from_date = $request->from_date ? $request->from_date : '';
-            $to_date = $request->to_date? $request->to_date : '';
+            $from_date =  $request->from_date  ? date('Y-m-d', strtotime($request->from_date)) : '';
+            $to_date =   $request->to_date    ? date('Y-m-d', strtotime($request->to_date)) :  '';
+            $request_type = $request->filter_request_type ? $request->filter_request_type  : '';
+            $today = date('Y-m-d');
+            $early_date = date('Y-m-d',PHP_INT_MIN);
 
-            if($from_date){
-                $from_date= date('Y-m-d', strtotime($from_date));
-                $to_date= date('Y-m-d', strtotime($to_date));
+
+            if($from_date || $to_date || $request_type){
+
                 $data = WarehouseActions::join('users','users.id','=','warehouse_actions.user_id')
-                    ->whereRaw("(warehouse_actions.created_at >= ? AND warehouse_actions.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"])
-                    ->select('warehouse_actions.*','users.first_name','users.last_name')->get();
+                    ->where(function ($query) use ($request_type) {
+                        if ($request_type != -1) {
+                            $query->where("warehouse_actions.action", '=', $request_type);
+                        }
+                    })->where(function ($query) use ($from_date,$to_date,$early_date,$today) {
+                        if ($from_date && $to_date) {
+                            $query->whereRaw("(warehouse_actions.created_at >= ? AND warehouse_actions.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"]);
+                        }
+                        elseif($from_date){
+                            $query->whereRaw("(warehouse_actions.created_at >= ? AND warehouse_actions.created_at <= ?)",[$from_date." 00:00:00", $today." 23:59:59"]);
+                        }
+                        elseif($to_date){
+                            $query->whereRaw("(warehouse_actions.created_at >= ? AND warehouse_actions.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"]);
+                        }
+                        else{
+                            $query->whereRaw("(warehouse_actions.created_at >= ? AND warehouse_actions.created_at <= ?)",[$early_date." 00:00:00", $today." 23:59:59"]);
+                        }
+                    })
+                    ->select('warehouse_actions.*', 'users.first_name', 'users.last_name', 'users.email', 'users.mobile')->get();
             }
             else{
                 $data = WarehouseActions::join('users','users.id','=','warehouse_actions.user_id')->select('warehouse_actions.*','users.first_name','users.last_name')->get();

@@ -21,7 +21,6 @@
                                 </div>
                                 <div class="col-md-3">
                                     <select name="filter_request_type" id="filter_request_type" class="form-control" required>
-                                        <option value="">Select Request Type</option>
                                         <option value="-1">All</option>
                                         <option value="{{\App\Constants\AppConstants::CASH_OUT}}">Cash out</option>
                                         <option value="{{\App\Constants\AppConstants::GOLD_OUT}}">Gold Out</option>
@@ -86,16 +85,9 @@
             var to_date = $('#to_date').val();
             var filter_request_type  = $('#filter_request_type').val();
 
+            $('.yajra-datatable').DataTable().destroy();
 
-            // if(from_date != '' &&  to_date != '' && filter_request_type!='')
-            // {
-                $('.yajra-datatable').DataTable().destroy();
-                load_data(from_date, to_date,filter_request_type);
-            // }
-            // else
-            // {
-            //     swal.fire("", "Both Date is required!", "warning");
-            // }
+            load_data(from_date, to_date,filter_request_type);
         })
 
         $('#refresh').click(function(){

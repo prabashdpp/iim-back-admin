@@ -29,19 +29,36 @@ class RequestsController extends Controller
     {
         if ($request->ajax()) {
 
-            $from_date = $request->from_date ? $request->from_date : '';
-            $to_date = $request->to_date ? $request->to_date  : '';
+            $from_date =  $request->from_date  ? date('Y-m-d', strtotime($request->from_date)) : '';
+            $to_date =   $request->to_date    ? date('Y-m-d', strtotime($request->to_date)) :  '';
             $request_type = $request->filter_request_type ? $request->filter_request_type  : '';
+            $today = date('Y-m-d');
+            $early_date = date('Y-m-d',PHP_INT_MIN);
 
-//            die($request_type);
 
-            if($from_date || $request_type){
-                $from_date= date('Y-m-d', strtotime($from_date));
-                $to_date= date('Y-m-d', strtotime($to_date));
+
+            if($from_date || $to_date || $request_type){
+
                 $data = CustomerRequests::join('users','users.id','=','customer_requests.user_id')
-                   // ->where("customer_requests.type",'=',$request_type)
-                    ->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"])
-                    ->select('customer_requests.*','users.first_name','users.last_name','users.email','users.mobile')->get();
+                ->where(function ($query) use ($request_type) {
+                    if ($request_type != -1) {
+                        $query->where("customer_requests.type", '=', $request_type);
+                    }
+                })->where(function ($query) use ($from_date,$to_date,$early_date,$today) {
+                        if ($from_date && $to_date) {
+                            $query->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"]);
+                        }
+                        elseif($from_date){
+                            $query->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$from_date." 00:00:00", $today." 23:59:59"]);
+                        }
+                        elseif($to_date){
+                            $query->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$from_date." 00:00:00", $to_date." 23:59:59"]);
+                        }
+                        else{
+                            $query->whereRaw("(customer_requests.created_at >= ? AND customer_requests.created_at <= ?)",[$early_date." 00:00:00", $today." 23:59:59"]);
+                        }
+                    })
+                ->select('customer_requests.*', 'users.first_name', 'users.last_name', 'users.email', 'users.mobile')->get();
             }
             else{
                 $data = CustomerRequests::join('users','users.id','=','customer_requests.user_id')->select('customer_requests.*','users.first_name','users.last_name','users.email','users.mobile')->get();
@@ -56,6 +73,9 @@ class RequestsController extends Controller
                 }
                 else if($d->type==AppConstants::GOLD_OUT){
                     $d->request_type='Gold Out';
+                }
+                else if($d->type==AppConstants::GENERAL_REQUEST){
+                    $d->request_type='General';
                 }
                 else{
                     $d->request_type='Other';

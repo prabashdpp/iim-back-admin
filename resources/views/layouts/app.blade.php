@@ -104,8 +104,8 @@
         });
         </script>
 
-        @if(auth()->user()->is_admin)
             <script>
+{{--                @if(auth()->user()->is_admin)--}}
 
 
                 // $(document).on('click', '#navbarDropdownMenuLink', function(){
@@ -161,8 +161,9 @@
                         });
                     });
                 });
+{{--                @endif--}}
+
             </script>
-        @endif
 
         @stack('js')
     </body>

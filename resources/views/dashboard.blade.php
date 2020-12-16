@@ -16,8 +16,6 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons text-danger">warning</i>
-                <a href="#pablo">Get More Space...</a>
               </div>
             </div>
           </div>
@@ -26,17 +24,16 @@
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">request_page</i>
+                <i class="material-icons">support_agent</i>
               </div>
               <p class="card-category">Total Requests</p>
-              <h4 class="card-title">Cash Requests: {{$cash_requests}}</h4>
-                <h4 class="card-title">Gold Requests: {{$gold_requests}}</h4>
-                <h4 class="card-title">Other Requests: {{$other_requests}}</h4>
+              <h5 class="card-title">Cash Requests: {{$cash_requests}}</h5>
+                <h5 class="card-title">Gold Requests: {{$gold_requests}}</h5>
+                <h5 class="card-title">Other Requests: {{$other_requests}}</h5>
 
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">date_range</i> Last 24 Hours
               </div>
             </div>
           </div>
@@ -52,7 +49,6 @@
                 <h4 class="card-title">Sell: {{$sell_total}} &#163;</h4>            </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">local_offer</i> Tracked from Github
               </div>
             </div>
           </div>
@@ -61,7 +57,7 @@
           <div class="card card-stats">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
-                <i class="fa fa-twitter"></i>
+                <i class="material-icons">euro_symbol</i>
               </div>
               <p class="card-category">Commission Rates</p>
                 <h4 class="card-title">Buy Commission: {{$buy_commission}}</h4>
@@ -69,7 +65,6 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">update</i> Just Updated
               </div>
             </div>
           </div>

@@ -55,13 +55,20 @@
                             <div class="card-body">
 
                             <div class="row input-daterange">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" name="from_date" id="from_date" class="form-control datepicker" placeholder="From Date"  />
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input type="text" name="to_date" id="to_date" class="form-control datepicker" placeholder="To Date"  />
                                     </div>
-                                    <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <select name="filter_request_type" id="filter_request_type" class="form-control" required>
+                                        <option value="-1">All</option>
+                                        <option value="{{\App\Constants\AppConstants::BUY}}">Buy</option>
+                                        <option value="{{\App\Constants\AppConstants::SELL}}">Sell</option>
+                                    </select>
+                                </div>
+                                    <div class="col-md-3">
                                         <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
                                         <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
                                     </div>
@@ -118,20 +125,15 @@
 
         load_data();
 
-        $('#filter').click(function(){
-            var from_date = $('#from_date').val();
-            var to_date = $('#to_date').val();
+            $('#filter').click(function(){
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+                var filter_request_type  = $('#filter_request_type').val();
 
-            if(from_date != '' &&  to_date != '')
-            {
                 $('.yajra-datatable').DataTable().destroy();
-                load_data(from_date, to_date);
-            }
-            else
-            {
-                swal.fire("", "Both Date is required!", "warning");
-            }
-        })
+
+                load_data(from_date, to_date,filter_request_type);
+            })
 
         $('#refresh').click(function(){
             $('#from_date').val('');
@@ -170,7 +172,7 @@
         });
 
 
-        function load_data(from_date = '', to_date = ''){
+            function load_data(from_date = '', to_date = '',filter_request_type=''){
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -180,6 +182,8 @@
                     data: function (d) {
                         d.from_date = from_date;
                         d.to_date = to_date;
+                        d.filter_request_type = filter_request_type;
+
                     }
                 },
 
