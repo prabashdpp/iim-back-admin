@@ -173,6 +173,10 @@
 
 
             function load_data(from_date = '', to_date = '',filter_request_type=''){
+
+                const FROM_PATTERN = 'YYYY-MM-DD HH:mm:ss.SSS';
+                const TO_PATTERN   = 'DD/MM/YYYY HH:mm';
+
             var table = $('.yajra-datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -186,7 +190,13 @@
 
                     }
                 },
-
+                "columnDefs": [{
+                    //render: $.fn.dataTable.render.moment( 'DD/MM/YYYY HH:mm' )
+                    "render": function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm');
+                    },
+                    "targets": 1
+                }],
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'created_at', name: 'created_at' },

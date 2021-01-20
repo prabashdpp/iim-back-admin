@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\WarehouseActions;
 use App\Models\WarehouseDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -42,33 +44,44 @@ class HomeController extends Controller
         $dashboard_data['buy_commission']= $warehouse->buy_commission;
         $dashboard_data['sell_commission']= $warehouse->sell_commission;
 
-        $userData = User::select(\DB::raw("COUNT(*) as count"))
-            ->whereYear('created_at', date('Y'))
-            ->groupBy(\DB::raw("Month(created_at)"))
-            ->pluck('count');
+         $users = User::select(DB::raw("COUNT(*) as count"))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+            $months= User::select(DB::raw("Month(created_at) as month"))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('month');
+            $userData = array(0,0,0,0,0,0,0,0,0,0,0,0);
+
+            foreach ($months as $i=> $month){
+                $userData[$month]=$users[$i];
+            }
+
 
         $dashboard_data['userData']=$userData;
 
 
         $requestData = CustomerRequests::select(\DB::raw("COUNT('*') as count"))
-            ->whereYear('created_at', date('Y'))
             ->groupBy(\DB::raw("type"))
             ->pluck('count');
-        $requestData[0]= ['Cash Out',$requestData[0]];
-        $requestData[1]= ['Gold Out',$requestData[1]];
-        $requestData[2]= ['General',$requestData[2]];
-        $requestData[3]= ['Questions',$requestData[3]];
-        $dashboard_data['requestData']=$requestData;
+
+
+       $requestDataStats[0] = ['Cash Out',$requestData[0]];
+       $requestDataStats[1] = ['Gold Out',$requestData[1]];
+       $requestDataStats[2] = ['General',$requestData[2]];
+       $requestDataStats[3] = ['Questions',$requestData[3]];
+
+        $dashboard_data['requestData']=$requestDataStats;
 
 
         $warehouseData = WarehouseActions::select('action',\DB::raw("COUNT('*') as count"))
-            ->whereYear('created_at', date('Y'))
             ->groupBy(\DB::raw("action"))
             ->pluck('count');
 
-        $warehouseData[0]= ['Buy',$warehouseData[0]];
-        $warehouseData[1]= ['Sell',$warehouseData[1]];
-        $dashboard_data['warehouseData']=$warehouseData;
+
+        $warehouseDataStats[0]= ['Buy',$warehouseData[0]];
+        $warehouseDataStats[1]= ['Sell',$warehouseData[1]];
+
+        $dashboard_data['warehouseData']=$warehouseDataStats;
 
 
         return view('dashboard',$dashboard_data);

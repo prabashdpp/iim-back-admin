@@ -37,8 +37,8 @@
                             <div class="dropdown-item" role="alert" style="width:700px" data-id="{{ $notification->id }}">
                                 [{{ $notification->created_at }}] User {{ $notification->data['message'] }}
                                 <div style="width:250px;max-width:500px; display: inline-block">
-                                    <a href="#" class="dropdown-item float-right " >
-                                    </a></div>
+                                    <a href="#" class="dropdown-item float-right"></a>
+                                </div>
                                 <div style="width: 100px"><button class="btn-info pull-left mark-as-read" data-id="{{ $notification->id }}">Mark as read</button></div>
                             </div>
 

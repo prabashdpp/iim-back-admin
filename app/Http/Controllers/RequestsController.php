@@ -146,49 +146,107 @@ class RequestsController extends Controller
 
     public function replyRequests(Request $request)
     {
-        $customerRequest = CustomerRequests::find($request->requestId);
+        $requestId=$request->requestId ? $request->requestId : '';
+        $customerRequest = CustomerRequests::find($requestId);
+        $responseMessage = $request->responseMessage ? $request->responseMessage : '';
+        $user = User::find($customerRequest->user_id);
+        $userId = $user->id;
+        $resultStatus = $request->acceptRequest ? $request->acceptRequest : 0;
+
 
         if($customerRequest->type==AppConstants::CASH_OUT){
+            $subject = 'Feedback for Cash Out Request';
             if($request->acceptRequest==AppConstants::REQUEST_RESULT_ACCEPTED){
-                $message= 'Cash Out Request Approved.';
+                $message= 'approved Cash Out Request of' . ' '. $customerRequest->amount . ' ' .$user->currency.'.';
+                $body='We have approved your Cash Out request of ' . $customerRequest->amount . ' ' . $user->currency.'
+                       Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided. '
+                       .$responseMessage;
+                $description = $message.' '.$responseMessage;
 
             }
             else{
-                $message= 'Cash Out Request Rejected.';
+                $message= 'rejected Cash Out Request of' . ' '. $customerRequest->amount . ' ' .$user->currency.'.';
+                $body='We have rejected your Cash Out request of ' . $customerRequest->amount . ' ' . $user->currency.'
+                       Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided. '
+                    .$responseMessage;
+                $description = $message.' '.$responseMessage;
             }
-
-            $user = User::find($customerRequest->user_id);
-
-
-            $customerRequest->result_status=$request->acceptRequest;
-
-            $details = [
-                'subject' => 'Feedback for Cash Out Request',
-                'email' => TRUE,
-                'greeting' => 'Hi ' . $user->first_name,
-                'body' => 'We have approved your Cash Out request of ' . $customerRequest->amount . ' ' . $user->currency.'
-                            Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided.',
-                'thanks' => 'Thank you for using Invest in Moi',
-                'message' => 'approved your Cash Out Request of' . ' '. $customerRequest->amount . ' ' .$user->currency
-            ];
-
-            Notification::send($user, new AppNotification($details));
-
         }
 
-
         elseif ($customerRequest->type==AppConstants::GOLD_OUT){
-            $message= 'Cash Out Request Approved.';
+            $subject = 'Feedback for Gold Out Request';
+            if($request->acceptRequest==AppConstants::REQUEST_RESULT_ACCEPTED){
+                $message= 'approved Gold Out Request of' . ' '. $customerRequest->amount . ' ' .AppConstants::INSTRUMENT_UNIT.'.';
+                $body='We have approved your Cash Out request of ' . $customerRequest->amount . ' ' . AppConstants::INSTRUMENT_UNIT.'
+                       Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided. '
+                    .$responseMessage;
+                $description = $message.' '.$responseMessage;
+
+            }
+            else{
+                $message= 'rejected Gold Out Request of' . ' '. $customerRequest->amount . ' ' .AppConstants::INSTRUMENT_UNIT.'.';
+                $body='We have rejected your Cash Out request of ' . $customerRequest->amount . ' ' . AppConstants::INSTRUMENT_UNIT.'
+                       Our team has already started to process your request and you will get the Cash amount to the Bank Account you have provided. '
+                    .$responseMessage;
+                $description = $message.' '.$responseMessage;
+            }
 
         }
         elseif ($customerRequest->type==AppConstants::GENERAL_REQUEST){
-            $message= 'Cash Out Request Approved.';
+            $subject = 'Feedback for General Request';
+            if($request->acceptRequest==AppConstants::REQUEST_RESULT_RESOLVED){
+                $message= 'marked request as resolved';
+                $body= 'We have marked your requests as Resolved '.$responseMessage;
+                $description = $message.' '.$responseMessage;
+
+            }
+            else{
+                $message= 'General Request has replied';
+                $body=$responseMessage;
+                $description = $message.' '.$responseMessage;
+            }
 
         }
         elseif ($customerRequest->type==AppConstants::CUSTOMER_QUESTION){
-            $message= 'Cash Out Request Approved.';
+            $subject = 'Feedback for Question';
+            if($request->acceptRequest==AppConstants::REQUEST_RESULT_RESOLVED){
+                $message= 'marked request as resolved';
+                $body='We have marked your Issue as Resolved '.$responseMessage;
+                $description = $message.' '.$responseMessage;
 
+            }
+            else{
+                $message= 'Question Request has replied';
+                $body=$responseMessage;
+                $description = $message.' '.$responseMessage;
+            }
         }
+
+
+        //common saving process for all requests and send notifications
+        $customerRequest->result_status=$resultStatus;
+        $customerRequest->save();
+
+        $customer_requests_details= [
+            'request_id' => $requestId,
+            'description' => $description,
+            'message' => $message,
+            'user_id' => $userId,
+            'result_status' => $resultStatus
+        ];
+
+        CustomerRequestsDetails::Create($customer_requests_details);
+
+        $details = [
+            'subject' => $subject,
+            'email' => TRUE,
+            'greeting' => 'Hi ' . $user->first_name,
+            'body' => $body,
+            'thanks' => 'Thank you for using Invest in Moi',
+            'message' => $message
+        ];
+
+        Notification::send($user, new AppNotification($details));
 
         return response()->json(['success'=>$message]);
     }

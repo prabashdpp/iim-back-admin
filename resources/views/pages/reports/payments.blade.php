@@ -130,6 +130,12 @@
                 "fnDrawCallback": function() {
                     $('.toggle-class').bootstrapToggle();
                 },
+                "columnDefs": [{
+                    "render": function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm');
+                    },
+                    "targets": 1
+                }],
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'created_at', name: 'created_at' },

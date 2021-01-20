@@ -32,14 +32,23 @@ class ReportsController extends Controller
 
     public function reportSummary()
     {
-        $userData = User::select(\DB::raw("COUNT(*) as count"))
-            ->whereYear('created_at', date('Y'))
-            ->groupBy(\DB::raw("Month(created_at)"))
-            ->pluck('count');
+       
+            $users = User::select(DB::raw("COUNT(*) as count"))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+            $months= User::select(DB::raw("Month(created_at) as month"))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('month');
+            $userData = array(0,0,0,0,0,0,0,0,0,0,0,0);
+
+            foreach ($months as $i=> $month){
+                $userData[$month]=$users[$i];
+            }
+
+        $dashboard_data['userData']=$userData;
 
 
         $requestData = CustomerRequests::select(\DB::raw("COUNT('*') as count"))
-            ->whereYear('created_at', date('Y'))
             ->groupBy(\DB::raw("type"))
             ->pluck('count');
         $requestData[0]= ['Cash Out',$requestData[0]];
@@ -49,7 +58,6 @@ class ReportsController extends Controller
 
 
         $warehouseData = WarehouseActions::select('action',\DB::raw("COUNT('*') as count"))
-            ->whereYear('created_at', date('Y'))
             ->groupBy(\DB::raw("action"))
             ->pluck('count');
 
@@ -62,7 +70,7 @@ class ReportsController extends Controller
             ->groupBy(\DB::raw("Month(created_at)"))
             ->pluck('sum');
 
-        return view('pages.reports.summary', [ 'userData' => $userData ,'paymentData' => $paymentData,'requestData' => $requestData,'warehouseData' => $warehouseData] );
+            return view('pages.reports.summary', [ 'userData' => $userData ,'paymentData' => $paymentData,'requestData' => $requestData,'warehouseData' =>$warehouseData] );
     }
 
     public function reportUsers()

@@ -243,7 +243,7 @@
 
             Highcharts.chart('dailySalesChart', {
                 title: {
-                    text: 'New User Growth, 2020'
+                    text: 'New User Growth'
                 },
                 subtitle: {
                 },
@@ -295,7 +295,7 @@
 
             Highcharts.chart('customerPayments', {
                 title: {
-                    text: 'Customer Payments, 2020'
+                    text: 'Customer Payments'
                 },
                 subtitle: {
                 },
@@ -348,7 +348,7 @@
 
             Highcharts.chart('requesttData', {
                 title: {
-                    text: 'Customer Requests, 2020'
+                    text: 'Customer Requests'
                 },
                 subtitle: {
                 },

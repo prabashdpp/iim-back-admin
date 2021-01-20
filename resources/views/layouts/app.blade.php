@@ -95,6 +95,8 @@
 
         <script src="https://code.highcharts.com/highcharts.js"></script>
 
+        <script src="https://cdn.datatables.net/plug-ins/1.10.22/dataRender/datetime.js"></script>
+
 
         <script type="text/javascript">
         $.ajaxSetup({
@@ -133,16 +135,14 @@
                 }
 
                 $(function() {
-                    $(document).on('click','.dropdown-item[data-id=id]', function(e) {
-
-
+                    $(document).on('click','.mark-as-read', function(e) {
                         $('.mark-as-read').click(function () {
                             var id = $(this).data('id');
-                            alert(id);
-                            $(this).hide();
-                            $('.dropdown-item[data-id=id]').hide();
-                            // $('.dropdown-item[data-id=id]').hide();
-                            // alert('stop there');
+                          //  $(this).hide();
+                           // $('.dropdown-item[data-id=id]').hide();
+
+                               $(this).closest(".dropdown-item").remove();
+                           //  $(this).closest(".dropdown-item[data-id=id]").remove();
 
 
                             let request = sendMarkRequest($(this).data('id'));

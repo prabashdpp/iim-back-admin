@@ -131,14 +131,12 @@
 
       Highcharts.chart('UsersChart', {
           title: {
-              text: 'New User Growth, 2020'
+              text: 'New User Growth'
           },
           subtitle: {
           },
           xAxis: {
-              categories: [ 'November', 'December','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                  'October'
-              ]
+              categories: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October','November', 'December']
           },
           yAxis: {
               title: {
@@ -184,7 +182,7 @@
 
       Highcharts.chart('requestChart', {
           title: {
-              text: 'Customer Requests, 2020'
+              text: 'Customer Requests'
           },
           subtitle: {
           },
@@ -234,7 +232,7 @@
 
       Highcharts.chart('investments', {
           title: {
-              text: 'Customer Investments, 2020'
+              text: 'Customer Investments'
           },
           subtitle: {
           },

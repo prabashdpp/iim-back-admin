@@ -143,6 +143,12 @@
                         "fnDrawCallback": function() {
                             $('.toggle-class').bootstrapToggle();
                         },
+                        "columnDefs": [{
+                            "render": function(data) {
+                                return moment(data).format('DD/MM/YYYY HH:mm');
+                            },
+                            "targets": 1
+                        }],
                         columns: [
                             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                             {data: 'created_at', name: 'created_at' },
@@ -208,6 +214,13 @@
                             "fnDrawCallback": function() {
                                 $('.toggle-class').bootstrapToggle();
                             },
+                            "columnDefs": [{
+                                //render: $.fn.dataTable.render.moment( 'DD/MM/YYYY HH:mm' )
+                                "render": function(data) {
+                                    return moment(data).format('DD/MM/YYYY HH:mm');
+                                },
+                                "targets": 4
+                            }],
                             columns: [
                                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                                 {data: 'amount', name: 'amount'},
@@ -249,7 +262,7 @@
                                 swal.fire("","Description required when reject a request", "warning");
                                 e.preventDefault();
                             }
-                            var acceptRequest=0;
+                            var acceptRequest=2;
                         }
                         else{
                             e.preventDefault();
@@ -257,13 +270,13 @@
 
                         if(result.isConfirmed || result.isDenied){
                             var requestId =  $(this).data('id');
-                            var message =$('#message').val();
+                            var responseMessage =$('#message').val();
 
                             $.ajax({
                                 type: "POST",
                                 dataType: "json",
                                 url: 'requests/replyRequests',
-                                data: {'acceptRequest': acceptRequest, 'requestId': requestId,'message':message},
+                                data: {'acceptRequest': acceptRequest, 'requestId': requestId,'responseMessage':responseMessage},
                                 success: function (data) {
                                     swal.fire("",data.success, "success");
                                 }
@@ -288,6 +301,12 @@
                         "fnDrawCallback": function() {
                             $('.toggle-class').bootstrapToggle();
                         },
+                        "columnDefs": [{
+                            "render": function(data) {
+                                return moment(data).format('DD/MM/YYYY HH:mm');
+                            },
+                            "targets": 4
+                        }],
                         columns: [
                             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                             {data: 'description', name: 'description'},
@@ -303,49 +322,83 @@
                 $(document).on('click', '.request_reply', function(){
                     Swal.fire({
                         title: 'Reply Customer Request',
-                        html: '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Enter Description to tell what happening to Customer"></textarea>',
+                        html: '<P>Previous Activities</p><table class="table history-datatable3"><thead class=" text-primary"><th>ID</th><th>Description</th><th>Message</th><th>User</th><th>Date</th></thead><tbody></tbody></table>' +
+                            '<textarea class="swal2-textarea" id="message" style="display: flex;" placeholder="Describe what happening to Customer"></textarea>',
                         icon: 'info',
                         showCancelButton: true,
                         showDenyButton:true,
+						denyButtonColor: '#3085d6',
+						denyButtonText: 'Delete',
+						
                         confirmButtonColor: '#47a44b',
-                        denyButtonColor: '#3085d6',
-                        // cancelButtonColor: '#d33',
                         confirmButtonText: 'Mark as Resolve',
-                        denyButtonText: 'Reply',
-                        width: '550px'
+                        width: '1000px'
 
                     }).then((result) => {
 
                         if (result.isConfirmed) {
-                            var markAsResolved=1;
+                            var acceptRequest= {{\App\Constants\AppConstants::REQUEST_RESULT_RESOLVED}};
                         }
                         else if(result.isDenied) {
                             if($("#description").val()==''){
                                 swal.fire("","Description required when reply for a request", "warning");
                                 e.preventDefault();
                             }
-                            var markAsResolved=0;
-                            var isReplied=1;
+                            var acceptRequest= {{\App\Constants\AppConstants::REQUEST_RESULT_REPLIED}};
+
                         }
                         else{
                             e.preventDefault();
                         }
 
                         if(result.isConfirmed || result.isDenied){
+
                             var requestId =  $(this).data('id');
+                            var responseMessage =$('#message').val();
 
                             $.ajax({
                                 type: "POST",
                                 dataType: "json",
                                 url: 'requests/replyRequests',
-                                data: {'markAsResolved': markAsResolved, 'isReplied': isReplied},
+                                data: {'acceptRequest': acceptRequest, 'requestId': requestId,'responseMessage':responseMessage},
                                 success: function (data) {
                                     swal.fire("",data.success, "success");
                                 }
                             });
                         }
-
                     });
+
+                        $id=  $(this).data('id');
+
+                        var table = $('.history-datatable3').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            dom: 't',
+                            ajax: {
+                                url: "{{route('requests.getPreviousActivities') }}",
+                                type: 'POST',
+                                data: function (d) {
+                                    d.request_id = $id;
+                                }
+                            },
+                            "fnDrawCallback": function() {
+                                $('.toggle-class').bootstrapToggle();
+                            },
+                            "columnDefs": [{
+                                "render": function(data) {
+                                    return moment(data).format('DD/MM/YYYY HH:mm');
+                                },
+                                "targets": 4
+                            }],
+                            columns: [
+                                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                                {data: 'description', name: 'description'},
+                                {data: 'message', name: 'message'},
+                                {data: 'name', name: 'name'},
+                                {data: 'created_at', name: 'created_at'},
+                            ]
+                        });
+
                 });
 
             </script>
