@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\AppConstants;
 use App\Http\Requests\UserRequest;
+use App\Models\CustomerWithdrawalDetails;
 use App\Models\User;
 use App\Models\WarehouseActions;
 use Carbon\Carbon;
@@ -61,14 +62,16 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View images</a>';
                     if($row->user_status==1){
-                        $actionBtn .= '<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" checked>' ;
+                        $actionBtn = '<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" checked>' ;
                     }
                     else{
-                       $actionBtn .='<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">' ;
+                       $actionBtn ='<input data-id='.$row->id.' class="toggle-class" id="toggle-class"  type="checkbox"  data-toggle="toggle" data-height="1" data-width="150" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger">' ;
                     }
+                    $actionBtn .= '<a href="javascript:void(0)" data-id='.$row->id.'  class="viewimages btn btn-warning btn-sm">View images</a>';
                     $actionBtn .= '<a href="javascript:void(0)" class="investor_history btn btn-default btn-sm" data-id='.$row->id.'>History</a>';
+                    $actionBtn .= '<a href="javascript:void(0)" class="withdrawal_details btn btn-info btn-sm" data-id='.$row->id.'>Withdrawal Bank Details</a>';
+
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -89,20 +92,9 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-            $user_id = (!empty($_GET["user_id"])) ? ($_GET["user_id"]) : ('');
+                $user_id = $request->user_id;
 
-                $data = WarehouseActions::latest()->where('user_id','=',$user_id)->get();
-
-                foreach ($data as $d){
-                    $d->created_at= date('d-m-Y', strtotime($d->created_at));
-
-                        if($d->action==AppConstants::BUY){
-                            $d->action='Buy';
-                        }
-                        else{
-                            $d->action='Sell';
-                        }
-                    }
+                $data = CustomerWithdrawalDetails::where('user_id','=',$user_id)->get();
 
 
             return DataTables::of($data)
@@ -127,6 +119,20 @@ class UserController extends Controller
             $data['html']=$html;
 
             return response()->json(['success'=>$request->user_id,'images'=>$data]);
+        }
+    }
+
+    public function getWithdrawalDetails(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $user_id = (!empty($_GET["user_id"])) ? ($_GET["user_id"]) : ('');
+
+            $data = CustomerWithdrawalDetails::latest()->where('user_id','=',$user_id)->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
         }
     }
 }

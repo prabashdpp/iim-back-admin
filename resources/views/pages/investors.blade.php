@@ -40,7 +40,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table yajra-datatable">
+                                <table class="table yajra-datatable" style="width:100%">
                                     <thead class=" text-primary">
                                     <th>ID</th>
                                     <th>First Name</th>
@@ -239,6 +239,53 @@
                 ]
             });
         });
+        });
+
+        function listings_swal() {
+            return '<table class="table history-datatable"><thead class=" text-primary"><th>ID</th><th>Account Name</th><th>Account Number</th><th>Bank Name</th><th>Sort Code</th><th>Created at</th></thead><tbody></tbody></table>';
+        }
+
+        var html = listings_swal();
+
+        $(document).on('click', '.withdrawal_details', function(){
+
+            Swal.fire({
+                title: 'Withdrawal Details',
+                html: html,
+                width: '1000px'
+            });
+
+            $id=  $(this).data('id');
+
+            var table = $('.history-datatable').DataTable({
+                dom: 'rt',
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{route('users.getWithdrawalDetails') }}",
+                    type: 'GET',
+                    data: function (d) {
+                        d.user_id = $id;
+                    }
+                },
+                "fnDrawCallback": function() {
+                    $('.toggle-class').bootstrapToggle();
+                },
+                "columnDefs": [{
+                    "render": function(data) {
+                        return moment(data).format('DD/MM/YYYY HH:mm');
+                    },
+                    "targets": 5
+                }],
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'account_name', name: 'account_name'},
+                    {data: 'account_number', name: 'account_number'},
+                    {data: 'bank_name', name: 'bank_name'},
+                    {data: 'sort_code', name: 'sort_code'},
+                    {data: 'created_at', name: 'created_at'},
+                ]
+            });
         });
 
 

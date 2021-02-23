@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/changeUserStatus',[\App\Http\Controllers\UserController::class, 'changeUserStatus']);
     Route::get('users/getUserImages',[\App\Http\Controllers\UserController::class, 'getUserImages']);
     Route::get('users/investments', [\App\Http\Controllers\UserController::class, 'getInvestments'])->name('users.investments');
+    Route::get('users/getWithdrawalDetails', [\App\Http\Controllers\UserController::class, 'getWithdrawalDetails'])->name('users.getWithdrawalDetails');
 
     Route::get('commissions',[\App\Http\Controllers\CommissionController::class, 'index'])->name('commissions');
     Route::get('commissions/changeCommissions',[\App\Http\Controllers\CommissionController::class, 'changeCommissions']);

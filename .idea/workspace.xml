@@ -20,19 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fdc7f8e-728c-47b3-bae5-1f4a1007b132" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Models/CustomerWithdrawalDetails.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RequestsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbars/navs/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbars/navs/auth.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/commissions.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/gold.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/investors.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports/invests.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports/invests.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports/payments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports/payments.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports/requests.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports/requests.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/reports/users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/reports/users.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/requests.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +166,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../recruit" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.customizations" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -188,6 +180,7 @@
       <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Http\Controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\invest_in_moi_back\app\Models" />
       <recent name="C:\xampp\htdocs\invest_in_moi_back\resources\views\pages\reports" />
     </key>
   </component>
@@ -230,6 +223,10 @@
       <workItem from="1608266344090" duration="26000" />
       <workItem from="1609752035704" duration="844000" />
       <workItem from="1609762206402" duration="4934000" />
+      <workItem from="1612345610153" duration="5244000" />
+      <workItem from="1612357892758" duration="273000" />
+      <workItem from="1614082864110" duration="2062000" />
+      <workItem from="1614109799480" duration="608000" />
     </task>
     <servers />
   </component>
